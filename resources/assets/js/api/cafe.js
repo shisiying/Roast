@@ -6,14 +6,14 @@ export default {
      */
     getCafes:function () {
         return axios.get(ROAST_CONFIG.API_URL+'/cafes');
-    }
+    },
 
     /**
      * Get /api/v1/cafes/{cafeID}
      */
     getCafe:function (cafeID) {
         return axios.get(ROAST_CONFIG.API_URL+'/cafes/'+cafeID);
-    }
+    },
 
     /**
      * Post /api/v1/cafes
