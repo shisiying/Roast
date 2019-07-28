@@ -60,5 +60,5 @@ Route::group(['prefix' => 'v1','middleware' => 'auth:api'],function (){
     */
     Route::post('/cafes', 'API\CafesController@postNewCafe');
 
-
+    Route::get('/brew-methods', 'API\BrewMethodsController@getBrewMethods');
 });
