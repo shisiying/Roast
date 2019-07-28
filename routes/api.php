@@ -12,8 +12,17 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+//Route::group(['prefix'=>'v1'],function (){
+//
+//    Route::get('/user','Api\UsersController@getUser');
+//
+//
+//});
 
-Route::group(['prefix' => 'v1','middleware' => 'auth:;api'],function (){
+
+//需要授权路由
+Route::group(['prefix' => 'v1','middleware' => 'auth:api'],function (){
+
     Route::get('/user', function( Request $request ){
         return $request->user();
     });
@@ -50,5 +59,6 @@ Route::group(['prefix' => 'v1','middleware' => 'auth:;api'],function (){
      | Description:    Adds a new cafe to the application
     */
     Route::post('/cafes', 'API\CafesController@postNewCafe');
+
 
 });

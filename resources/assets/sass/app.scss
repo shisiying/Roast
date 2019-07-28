@@ -1,3 +1,5 @@
-//Foundation
-@import "node_modules/foundation-sites/assets/foundation.scss";
+@import 'abstracts/variables';
 
+@import 'node_modules/foundation-sites/assets/foundation.scss';
+
+@import "components/validations.scss";

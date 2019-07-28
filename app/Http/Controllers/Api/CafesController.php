@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreCafeRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Cafe;
+use App\Utilities\GaodeMaps;
+
 class CafesController extends Controller
 {
     public function getCafes()
@@ -19,15 +21,18 @@ class CafesController extends Controller
         return response()->json($cafe);
     }
 
-    public function postNewCafe()
+    public function postNewCafe(StoreCafeRequest $request)
     {
         $cafe = new Cafe();
-        $cafe->name = Request::get('name');
-        $cafe->address  = Request::get('address');
-        $cafe->city     = Request::get('city');
-        $cafe->state    = Request::get('state');
-        $cafe->zip      = Request::get('zip');
+        $cafe->name = $request->name;
+        $cafe->address  = $request->address;
+        $cafe->city     = $request->city;
+        $cafe->state    = $request->state;
+        $cafe->zip      = $request->zip;
 
+        $coodrinates = GaodeMaps::geocodeAddress($cafe->address,$cafe->city,$cafe->state);
+        $cafe->latitude = $coodrinates['lat'];
+        $cafe->longitude = $coodrinates['lng'];
         $cafe->save();
 
         return response()->json($cafe, 201);

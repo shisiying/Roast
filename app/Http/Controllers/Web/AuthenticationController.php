@@ -45,7 +45,7 @@ class AuthenticationController extends Controller
         Auth::login( $user );
 
         //登陆成功后定向到首页
-        return redirect('/');
+        return redirect('/#/home');
     }
 
 }
