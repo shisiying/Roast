@@ -61,4 +61,16 @@ Route::group(['prefix' => 'v1','middleware' => 'auth:api'],function (){
     Route::post('/cafes', 'API\CafesController@postNewCafe');
 
     Route::get('/brew-methods', 'API\BrewMethodsController@getBrewMethods');
+
+    // 喜欢咖啡店
+    Route::post('/cafes/{id}/like', 'API\CafesController@postLikeCafe');
+    // 取消喜欢咖啡店
+    Route::delete('/cafes/{id}/like', 'API\CafesController@deleteLikeCafe');
+    //添加标签
+    Route::post('/cafes/{id}/tags', 'API\CafesController@postAddTags');
+    //删除指定的标签
+    Route::delete('/cafes/{id}/tags/{tagID}', 'API\CafesController@deleteCafeTag');
+    //搜索标签
+    Route::get('/tags', 'API\TagsController@getTags');
+
 });
