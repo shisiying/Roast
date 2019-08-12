@@ -4,7 +4,7 @@
         <div class="tags-input" v-on:click="focusTagInput()">
             <div class="selected-tag" v-for="(selectedTag,key) in tagsArray">
                 {{selectedTag}}
-                <span class="remove-tag" v-on:click="removeTag(key)"></span>
+                <span class="remove-tag" v-on:click="removeTag(key)">x</span>
             </div>
             <input type="text" v-bind:id="unique" class="new-tag-input" v-model="currentTag" v-on:keyup="searchTags"
                    v-on:keyup.enter="addNewTag" v-on:keydown.up="changeIndex( 'up' )" v-on:keydown.delete="handleDelete"
@@ -12,9 +12,9 @@
                    placeholder="Add a tag"/>
         </div>
 
-        <div class="tag-autocomplete" v-show="showAotocomplete">
+        <div class="tag-autocomplete" v-show="showAotucomplete">
             <div class="tag-search-result" v-for="(tag,key) in tagSearchResults" v-bind:class="{ 'selected-search-index' : searchSelectedIndex === key }"
-            v-on:click="selectedTag(tag.name)">
+            v-on:click="selectTag(tag.name)">
                 {{tag.name}}
             </div>
         </div>
@@ -34,7 +34,7 @@
                 tagSearchResults:[],
                 duplicateFlag:false,
                 searchSelectedIndex:-1,
-                pauseSearch:false
+                pauseSearch:false,
             };
         },
         mounted() {
@@ -55,7 +55,7 @@
         methods:{
             //从下拉表选择自动提示标签
             selectTag(tag) {
-                if (!checkDuplicates(tag)) {
+                if (!this.checkDuplicates(tag)) {
                     tag = this.cleanTagName(tag);
                     this.tagsArray.push(tag);
                     //在事件总线中广播标签只变动

@@ -7,7 +7,7 @@
         <ul class="links">
             <li>
                 <router-link :to="{name:'cafes'}">
-                    Cades
+                    Cafes
                 </router-link>
             </li>
         </ul>

@@ -67,7 +67,11 @@
                     <div class="large-12 medium-12 small-12 cell">
                         <a class="button" v-on:click="removeLocation(key)">移除位置</a>
                     </div>
+                    <div class="large-12 medium-12 small-12 cell">
+                        <tags-input v-bind:unique="key"></tags-input>
+                    </div>
                 </div>
+
                 <div class="grid-x grid-padding-x">
                     <div class="large-12 medium-12 small-12 cell">
                         <a class="button" v-on:click="addLocation()">新增位置</a>
@@ -82,8 +86,14 @@
 </template>
 
 <script>
+    import TagsInput from '../components/global/forms/TagsInput.vue';
+    import { EventBus } from '../event-bus.js';
+
     export default {
 
+        components: {
+            TagsInput
+        },
         data() {
             return {
                 name: '',
@@ -108,6 +118,12 @@
                 }
             }
         },
+        mounted()
+        {
+            EventBus.$on('tags-edited', function (tagsAdded) {
+                this.locations[tagsAdded.unique].tags = tagsAdded.tags;
+            }.bind(this));
+        },
         created(){
             this.addLocation();
         },
@@ -123,6 +139,7 @@
         methods: {
             submitNewCafe: function () {
                 if (this.validateNewCafe()) {
+                // if (1) {
                     this.$store.dispatch('addCafe', {
                         name: this.name,
                         locations: this.locations,
@@ -203,7 +220,7 @@
                 return validNewCafeForm;
             },
             addLocation() {
-                this.locations.push({name: '', address: '', city: '', state: '', zip: '', methodsAvailable: []});
+                this.locations.push({name: '', address: '', city: '', state: '', zip: '', methodsAvailable: [],tags:''});
                 this.validations.locations.push({
                     address:{
                         is_valid:true,
@@ -250,6 +267,7 @@
                 };
 
                 this.addLocation();
+                EventBus.$emit('clear-tags');
             }
         },
         watch:{

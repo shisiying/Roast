@@ -24,6 +24,7 @@ class CafesController extends Controller
         $cafe = Cafe::where('id', '=', $id)
             ->with('brewMethods')
             ->with('userLike')
+            ->with('tags')
             ->first();
         return response()->json($cafe);
     }
@@ -64,7 +65,6 @@ class CafesController extends Controller
         // 添加者
         $parentCafe->added_by = $request->user()->id;
         $parentCafe->save();
-
         // 冲泡方法
         $brewMethods = $locations[0]['methodsAvailable'];
         //标签信息

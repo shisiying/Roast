@@ -14,7 +14,7 @@ class CreateCafesUsersTagsTable extends Migration
     public function up()
     {
         Schema::create('cafes_users_tags', function (Blueprint $table) {
-            $table->increments('cafe_id')->unsigned();
+            $table->integer('cafe_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('tag_id')->unsigned();
             $table->primary(['cafe_id', 'user_id', 'tag_id'], 'cafes_users_tags_primary');
